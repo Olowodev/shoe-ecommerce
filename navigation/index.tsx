@@ -12,11 +12,19 @@ import { ColorSchemeName, Pressable } from 'react-native';
 
 import Colors from '../constants/Colors';
 import useColorScheme from '../hooks/useColorScheme';
-import ModalScreen from '../screens/ModalScreen';
+import Cart from '../screens/Cart';
+import CurrencyModal from '../screens/CurrencyModal';
+import Inbox from '../screens/Inbox';
+import LanguageModal from '../screens/LanguageModal';
+import LocationModal from '../screens/LocationModal';
 import NotFoundScreen from '../screens/NotFoundScreen';
+import Orders from '../screens/Orders';
+import Settings from '../screens/Settings';
 import TabOneScreen from '../screens/TabOneScreen';
 import TabTwoScreen from '../screens/TabTwoScreen';
+import Wishlist from '../screens/Wishlist';
 import { RootStackParamList, RootTabParamList, RootTabScreenProps } from '../types';
+import CustomDrawer from './CustomDrawer';
 import LinkingConfiguration from './LinkingConfiguration';
 
 export default function Navigation({ colorScheme }: { colorScheme: ColorSchemeName }) {
@@ -37,12 +45,26 @@ const Stack = createNativeStackNavigator<RootStackParamList>();
 
 function RootNavigator() {
   return (
-    <Stack.Navigator>
-      <Stack.Screen name="Root" component={BottomTabNavigator} options={{ headerShown: false }} />
-      <Stack.Screen name="NotFound" component={NotFoundScreen} options={{ title: 'Oops!' }} />
+    <Stack.Navigator 
+      screenOptions={{
+        headerShown: false
+      }}
+      initialRouteName={'Home'}
+    >
+      {/* <Stack.Screen name="Root" component={BottomTabNavigator} options={{ headerShown: false }} />
+      <Stack.Screen name="NotFound" component={NotFoundScreen} options={{ title: 'Oops!' }} /> */}
+      
+      <Stack.Screen options={{headerShown: false}} name='Drawer' component={CustomDrawer} />
+      <Stack.Screen options={{headerShown: false}} name='Cart' component={Cart} />
       <Stack.Group screenOptions={{ presentation: 'modal' }}>
-        <Stack.Screen name="Modal" component={ModalScreen} />
+        <Stack.Screen name="LocationModal" component={LocationModal} />
+        <Stack.Screen name="CurrencyModal" component={CurrencyModal} />
+        <Stack.Screen name="LanguageModal" component={LanguageModal} />
       </Stack.Group>
+      {/* <Stack.Screen options={{headerShown: false}} name='Wishlist' component={Wishlist} />
+      <Stack.Screen options={{headerShown: false}} name='Inbox' component={Inbox} />
+      <Stack.Screen options={{headerShown: false}} name='Orders' component={Orders} />
+      <Stack.Screen options={{headerShown: false}} name='Settings' component={Settings} /> */}
     </Stack.Navigator>
   );
 }
